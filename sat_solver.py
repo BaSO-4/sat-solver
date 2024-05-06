@@ -93,7 +93,8 @@ def read_input(path):
     return num_vars, num_clauses, clauses
 
 def write_output(path, solution):
-    pass
+    with open(path, 'w') as file:
+        file.write(' '.join([str(x) for x in solution]))
 
 def check_solution(assignments, path_to_solution):
     with open(path_to_solution, 'r') as file:
@@ -105,9 +106,11 @@ def check_solution(assignments, path_to_solution):
     return sorted_assignments == sorted_solution
 
 if __name__ == "__main__":
-    num_vars, num_clauses, formula = read_input("..\\examples\\sudoku_mini.txt")
+    filename = "sudoku_mini"
+    num_vars, num_clauses, formula = read_input("..\\examples\\"+filename+".txt")
     solver = Solver(num_vars, num_clauses)
     success, assignments = solver.solve(formula)
     print(success)
     # print(assignments)
-    print(check_solution(assignments, "..\\examples\\sudoku_mini_solution.txt"))
+    # print(check_solution(assignments, "..\\examples\\"+filename+"_solution.txt"))
+    write_output("..\\examples\\"+filename+"_output.txt", assignments)
